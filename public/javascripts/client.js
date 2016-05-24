@@ -39,8 +39,7 @@ socket.on('message', function(data){
 });
 
 socket.on('chat end', function(){
-	showDisconnectScreen();
-	socket.leave(room);
+	leaveChat();
 	room='';
 });
 
