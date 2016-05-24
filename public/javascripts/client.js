@@ -31,6 +31,7 @@ socket.on('chat start', function(data){
 	room = data.room;
 	inRoom = true;
 	showServerMessage(data);
+	$('#disconnect').attr('onclick','leaveChat();').attr('value','Rozłącz');
 });
 
 socket.on('message', function(data){
@@ -82,9 +83,9 @@ var showMyMessage = function(data){
 var showDisconnectScreen = function(){
 	
 	$('#status').html('Gość się rozłączył');
-	//clear screen
-	//someone has disconnected
-	//new connect button
+	$('#conversation').empty();
+	$('#disconnect').attr('onclick','connectAgain();').attr('value','Połącz');
+	
 }
 
 var sendMessage = function(message){
@@ -93,16 +94,21 @@ var sendMessage = function(message){
 }
 
 var leaveChat = function() {
-	if(connected){
-		io.disconnect();
+		socket.disconnect();
 		room='';
 		inRoom=false;
 		showDisconnectScreen();	
-	}
+}
+
+var connectAgain = function() {
+		socket.connect();
+		$('#disconnect').attr('onclick','leaveChat();').attr('value','Rozłącz');
+	
 }
 
 
 $(function(){
+	$('#connect').hide();
 	$('#datasend').click( function() {
 		var message = $('#data').val();
 		
@@ -135,6 +141,7 @@ $(function(){
 	$('#clearscreen').click(function(){
 		$('#conversation').empty();
 	});
+	
 	
 	var slider = new Slider('#ex1', {
 	formatter: function(value) {

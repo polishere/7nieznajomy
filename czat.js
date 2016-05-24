@@ -51,22 +51,29 @@ io.on('connection', function (socket) {
 			time=currentTime.getHours()+':0'+currentTime.getMinutes();
 		else
 			time=currentTime.getHours()+':'+currentTime.getMinutes();
+		if (time=='21:37')
+			time += " pamiętaj o papieżu";
 		socket.broadcast.to(room).emit('message', {data:data, time:time});
 		socket.emit('userCount', userCount)
 		
     });
-	
 
 	socket.on('disconnect', function(){
-		if(rooms[socket.id]){
+		
+		/* if(rooms[socket.id]){
+			
+			
 			var room = rooms[socket.id];
 			socket.broadcast.to(room).emit('chat end');
 			var peerID = room.split('#');
 			peerID = peerID[0] === socket.id ? peerID[1] : peerID[0];
 			findStranger(allUsers[peerID]);
+			
 		}
+		*/
 		socket.emit('userCount', --userCount);	
 		delete allUsers[socket.id];
+		console.log ('User '+socket.id+' disconnected')
 	});	
 	
 });
