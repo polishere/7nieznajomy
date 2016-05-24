@@ -47,12 +47,19 @@ io.on('connection', function (socket) {
 	socket.on('message', function (data) {
 		var room = rooms[socket.id];
 		currentTime = new Date();
-		if(currentTime.getMinutes()<10)
-			time=currentTime.getHours()+':0'+currentTime.getMinutes();
+		
+		if (currentTime.getHours()<10)
+			hours='0'+currentTime.getHours();
 		else
-			time=currentTime.getHours()+':'+currentTime.getMinutes();
-		if (time=='21:37')
-			time += " pamiętaj o papieżu";
+			hours=currentTime.getHours();
+		
+		if (currentTime.getMinutes()<10)
+			minutes='0'+currentTime.getMinutes();
+		else
+			minutes=currentTime.getMinutes();
+		
+		time=hours+':'+minutes;
+		
 		socket.broadcast.to(room).emit('message', {data:data, time:time});
 		socket.emit('userCount', userCount)
 		

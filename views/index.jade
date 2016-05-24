@@ -11,9 +11,10 @@ block content
       h3.panel-title= Chat
     .col-lg-12
      #demo-chat-body
-      .nano.has-scrollbar(style="height:400px;")
+      .nano.has-scrollbar(style="height:450px;")
        .nano-content.pad-all(tabindex="0", style="right:-17px;")
-        ul.list-unstyled.media-block#conversation
+        #conversations(style="overflow-y: hidden; height:400px;")
+         ul.list-unstyled.media-block#conversation
     #status.col-lg-12
     .panel-footer
      .col-lg-1.col-xs-1

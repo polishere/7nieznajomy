@@ -64,18 +64,34 @@ var showMessage = function (data) {
 	
 	if(data.serverinfo)
 	$('#status').html(data.data);
-	$('#conversation').append('<li class="mar-btm"><div class="media-left"><img src="http://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><a href="#" class="media-heading">Gość</a><p>'+data.data+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i>'+data.time+'</p></div></div></li>');
+	$('#conversation').append('<li class="mar-btm"><div class="media-left"><img src="/images/avatar1.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">Gość</span><p>'+data.data+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i>'+data.time+'</p></div></div></li>');
 	
-	var elem = document.getElementById('conversation');
+	var elem = document.getElementById('conversations');
 	elem.scrollTop = elem.scrollHeight;
 }
 
-var showMyMessage = function(data){
+var getTimeMsg = function(){
 	currentTime = new Date();
-	time=currentTime.getHours()+':'+currentTime.getMinutes();
-	$('#conversation').append('<li class="mar-btm"><div class="media-right"><img src="http://bootdey.com/img/Content/avatar/avatar2.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor speech-right"><div class="speech"><a href="#" class="media-heading">Ty</a><p>'+data+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i>'+time+'</p></div></div></li>');
+		
+	if (currentTime.getHours()<10)
+		hours='0'+currentTime.getHours();
+	else
+		hours=currentTime.getHours();
 	
-	var elem = document.getElementById('conversation');
+	if (currentTime.getMinutes()<10)
+		minutes='0'+currentTime.getMinutes();
+	else
+		minutes=currentTime.getMinutes();
+	
+	time=hours+':'+minutes;
+	
+	return time;
+}
+
+var showMyMessage = function(data){
+	$('#conversation').append('<li class="mar-btm"><div class="media-right"><img src="/images/avatar2.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor speech-right"><div class="speech"><span class="media-heading">Ty</span><p>'+data+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i>'+getTimeMsg()+'</p></div></div></li>');
+	
+	var elem = document.getElementById('conversations');
 	elem.scrollTop = elem.scrollHeight;
 }
 
@@ -111,7 +127,7 @@ $(function(){
 	$('#datasend').click( function() {
 		var message = $('#data').val();
 		
-		if (message.length<3)
+		if (message.length<1)
 			alert('Wiadomość za krótka. Napisz coś więcej');
 		else 
 			{$('#data').val('');
