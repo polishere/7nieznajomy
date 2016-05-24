@@ -1,0 +1,27 @@
+extends layout
+
+block content
+
+ #container
+   .col-lg-12
+    .panel
+     .panel-heading
+      .panel-control
+       #counter
+      h3.panel-title= Chat
+    .col-lg-12
+     #demo-chat-body
+      .nano.has-scrollbar(style="height:400px;")
+       .nano-content.pad-all(tabindex="0", style="right:-17px;")
+        ul.list-unstyled.media-block#conversation
+    #status.col-lg-12
+    .panel-footer
+     .col-lg-2.col-xs-1
+      input.btn.btn-primary.btn-block#clearscreen(type='button', value="Wyczyść okno")/
+     .col-lg-8.col-xs-4
+      input.form-control.chat-input#data(type='text', autofocus, placeholder='Napisz wiadomość...')/
+     .col-lg-2.col-xs-1
+      input.btn.btn-primary.btn-block#datasend(type='button', value="Wyślij")/
+      
+   
+
