@@ -1,30 +1,32 @@
 extends layout
 
 block content
+ nav.navbar.navbar-default.navbar-static-top
+  .container
+   .navbar-header
+     a.navbar-brand(href="#") Gościna
+    #navbar.navbar-collapse.collapse
+     ul.nav.navbar-nav.navbar-right
+      li
+       a#counter
+ .container
+    .jumbotron
+     #conversations.pad-all(style="overflow-y: auto; height:400px;")
+      ul.list-unstyled.media-block#conversation
+       li.mar-btm
+        .media-left
+         img.img-circle.img-sm(src="/images/avatar3.png", alt="Profile Picture")
+        .media-body.pad-hor
+         .speech
+          .span.media-heading SERWER
+          input#new.btn.btn-primary.btn-block.btn-lg(disabled="disabled", value="Szukam nowego Gościa...")/
+ footer.footer
+  .container
+   .col-sm-2.col-md-2
+      input.btn.btn-primary.btn-block.btn-lg#disconnect(type='button', value="Przerwij", onclick='leaveChat();')/
+     .col-sm-8.col-md-8
+      textarea.form-control.chat-input#data(rows="2", autofocus, placeholder='Napisz wiadomość...')
+     .col-sm2-2.col-md-2
+      input.btn.btn-primary.btn-block.btn-lg#datasend(type='button', value="Wyślij")/
 
- #container
-   .col-lg-12
-    .panel
-     .panel-heading
-      .panel-control
-       #counter
-      h3.panel-title= Chat
-    .col-lg-12
-     #demo-chat-body
-      .nano.has-scrollbar(style="height:450px;")
-       .nano-content.pad-all(tabindex="0", style="right:-17px;")
-        #conversations(style="overflow-y: hidden; height:400px;")
-         ul.list-unstyled.media-block#conversation
-    #status.col-lg-12
-    .panel-footer
-     .col-lg-1.col-xs-1
-      input.btn.btn-primary.btn-block#disconnect(type='button', value="Rozłącz", onclick='leaveChat();')/
-     .col-lg-1.col-xs-1
-      input.btn.btn-primary.btn-block#clearscreen(type='button', value="Wyczyść")/
-     .col-lg-8.col-xs-4
-      input.form-control.chat-input#data(type='text', autofocus, placeholder='Napisz wiadomość...')/
-     .col-lg-2.col-xs-1
-      input.btn.btn-primary.btn-block#datasend(type='button', value="Wyślij")/
-      
-   
 

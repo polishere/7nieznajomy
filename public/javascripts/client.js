@@ -32,6 +32,7 @@ socket.on('chat start', function(data){
 	inRoom = true;
 	showServerMessage(data);
 	$('#disconnect').attr('onclick','leaveChat();').attr('value','Rozłącz');
+	$('#conversation').html('<li class="mar-btm"><div class="media-left"><img src="/images/avatar3.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">SERWER</span><p>Znaleziono nowego gościa. Przywitaj się. :)</p></div></div></li>');
 });
 
 socket.on('message', function(data){
@@ -64,7 +65,7 @@ var showMessage = function (data) {
 	
 	if(data.serverinfo)
 	$('#status').html(data.data);
-	$('#conversation').append('<li class="mar-btm"><div class="media-left"><img src="/images/avatar1.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">Gość</span><p>'+data.data+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i>'+data.time+'</p></div></div></li>');
+	$('#conversation').append('<li class="mar-btm"><div class="media-left"><img src="/images/avatar1.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">Gość</span><p>'+data.data+'</p></div></div></li>');
 	
 	var elem = document.getElementById('conversations');
 	elem.scrollTop = elem.scrollHeight;
@@ -97,9 +98,13 @@ var showMyMessage = function(data){
 
 var showDisconnectScreen = function(){
 	
-	$('#status').html('Gość się rozłączył');
-	$('#conversation').empty();
-	$('#disconnect').attr('onclick','connectAgain();').attr('value','Połącz');
+	$('#conversation').html('<li class="mar-btm"><div class="media-left"><img src="/images/avatar3.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">SERWER</span><p>Rozłączono ;(</p> <input class="btn btn-primary btn-block btn-lg" id="new" value="Szukaj nowego Gościa", onclick=\'connectAgain()\'/></div></div></li>');
+	
+	$('#disconnect').attr('onclick','leaveChat();').attr('value','Połącz');
+	
+	
+	var elem = document.getElementById('conversations');
+	elem.scrollTop = elem.scrollHeight;
 	
 }
 
@@ -117,7 +122,8 @@ var leaveChat = function() {
 
 var connectAgain = function() {
 		socket.connect();
-		$('#disconnect').attr('onclick','leaveChat();').attr('value','Rozłącz');
+		$('#disconnect').attr('onclick','leaveChat();').attr('value','Szukam...');
+		$('#new').attr('disabled','disabled').attr('value','Szukam nowego Gościa...');
 	
 }
 
@@ -137,7 +143,7 @@ $(function(){
 		}
 		else
 			showDisconnectScreen();
-		$('#data').focus();}
+		$('#data').first().focus();}
 	});
 
 	// when the client hits ENTER on their keyboard
@@ -162,6 +168,10 @@ $(function(){
 	formatter: function(value) {
 		return 'Current value: ' + value;
 	}
+	
+	
+	
+	
 });
 
 });
