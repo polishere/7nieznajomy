@@ -71,9 +71,7 @@ var showServerMessage = function(data){
 
 var showMessage = function (data) {
 	
-	if(data.serverinfo)
-	$('#status').html(data.data);
-	$('#conversation').append('<li class="mar-btm"><div class="media-left"><img src="/images/avatar1.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">Gość</span><p>'+data.data+'</p></div></div></li>');
+	$('#conversation').append('<li class="mar-btm"><div class="media-left"><img src="/images/avatar1.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">Gość</span><p>'+data.data+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i>'+data.time+'</p></div></div></li>');
 	
 	var elem = document.getElementById('conversations');
 	elem.scrollTop = elem.scrollHeight;
