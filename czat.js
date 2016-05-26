@@ -10,7 +10,6 @@ var userCount = 0;
 var findStranger = function(socket){
 	if(queue.length>0)
 	{
-		console.log(queue.length);
 		var stranger = queue.pop();
 		var room=socket.id+'#'+stranger.id;
 
@@ -65,6 +64,12 @@ io.on('connection', function (socket) {
 		
     });
 
+	socket.on('typing', function () {
+		var room = rooms[socket.id];
+		socket.broadcast.to(room).emit('typing');
+		console.log('typing emitted');
+    });
+	
 	socket.on('disconnect', function(){
 		
 		if(rooms[socket.id]){

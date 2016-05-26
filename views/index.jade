@@ -5,7 +5,7 @@ block content
   .container
    .navbar-header
      a.navbar-brand(href="#") Gościna
-    #navbar.navbar-collapse.collapse
+    #navbar
      ul.nav.navbar-nav.navbar-right
       li
        a#counter
@@ -22,11 +22,11 @@ block content
           input#new.btn.btn-primary.btn-block.btn-lg(disabled="disabled", value="Szukam nowego Gościa...")/
  footer.footer
   .container
-   .col-sm-2.col-md-2
+   .col-xs-2.col-md-2
       input.btn.btn-primary.btn-block.btn-lg#disconnect(type='button', value="Przerwij", onclick='leaveChat();')/
-     .col-sm-8.col-md-8
-      textarea.form-control.chat-input#data(rows="2", autofocus, placeholder='Napisz wiadomość...')
-     .col-sm2-2.col-md-2
-      input.btn.btn-primary.btn-block.btn-lg#datasend(type='button', value="Wyślij")/
+     .col-xs-8.col-md-8
+      textarea.form-control.chat-input#data(rows="2", disabled="disabled", autofocus, placeholder='Napisz wiadomość...')
+     .col-xs-2.col-md-2
+      input.btn.btn-block.btn-lg#datasend(type='button', disabled="disabled", value="Wyślij")/
 
 

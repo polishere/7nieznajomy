@@ -30,6 +30,8 @@ socket.on('connect', function(){
 socket.on('chat start', function(data){
 	room = data.room;
 	inRoom = true;
+	$('#datasend').removeAttr('disabled').addClass('btn-primary');
+	$('#data').removeAttr('disabled');
 	showServerMessage(data);
 	$('#disconnect').attr('onclick','leaveChat();').attr('value','Rozłącz');
 	$('#conversation').html('<li class="mar-btm"><div class="media-left"><img src="/images/avatar3.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">SERWER</span><p>Znaleziono nowego gościa. Przywitaj się. :)</p></div></div></li>');
@@ -37,6 +39,15 @@ socket.on('chat start', function(data){
 
 socket.on('message', function(data){
 	showMessage(data)
+});
+
+socket.on('typing', function(){
+	if($("#typing").length==0){
+	$('#conversation').append('<li class="mar-btm" id="typing">Gość pisze...</li>');
+	setTimeout(function() {
+		$('#typing').remove();
+	}, 2000);
+	}
 });
 
 socket.on('chat end', function(){
@@ -53,9 +64,6 @@ socket.on('userCount', function(userCount){
 	$('#counter').html(userCount+ ' online')
 });
 
-socket.on('typing', function(data){
-	
-});
 
 var showServerMessage = function(data){
 	$('#status').html(data.data);
@@ -100,8 +108,9 @@ var showDisconnectScreen = function(){
 	
 	$('#conversation').html('<li class="mar-btm"><div class="media-left"><img src="/images/avatar3.png" class="img-circle img-sm" alt="Profile Picture"></div><div class="media-body pad-hor"><div class="speech"><span class="media-heading">SERWER</span><p>Rozłączono ;(</p> <input class="btn btn-primary btn-block btn-lg" id="new" value="Szukaj nowego Gościa", onclick=\'connectAgain()\'/></div></div></li>');
 	
-	$('#disconnect').attr('onclick','leaveChat();').attr('value','Połącz');
-	
+	$('#disconnect').attr('onclick','connectAgain();').attr('value','Połącz');
+	$('#datasend').attr('disabled','disabled').removeClass('btn-primary');
+	$('#data').attr('disabled','disabled');
 	
 	var elem = document.getElementById('conversations');
 	elem.scrollTop = elem.scrollHeight;
@@ -122,7 +131,7 @@ var leaveChat = function() {
 
 var connectAgain = function() {
 		socket.connect();
-		$('#disconnect').attr('onclick','leaveChat();').attr('value','Szukam...');
+		$('#disconnect').attr('onclick','leaveChat();').attr('value','Przerwij');
 		$('#new').attr('disabled','disabled').attr('value','Szukam nowego Gościa...');
 	
 }
@@ -152,6 +161,7 @@ $(function(){
 			$(this).blur();
 			$('#datasend').focus().click();
 		}
+		socket.emit('typing');
 	});
 	
 	$(document).keypress(function(e) {
